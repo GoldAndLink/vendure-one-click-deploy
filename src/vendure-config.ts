@@ -3,6 +3,7 @@ import {
     DefaultJobQueuePlugin,
     DefaultSearchPlugin,
     VendureConfig,
+    LanguageCode,
 } from '@vendure/core';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
 import { AssetServerPlugin, configureS3AssetStorage } from '@vendure/asset-server-plugin';
@@ -65,10 +66,35 @@ export const config: VendureConfig = {
     // When adding or altering custom field definitions, the database will
     // need to be updated. See the "Migrations" section in README.md.
     customFields: {
-        Product: [{
-            name: 'test',
-            type: 'string',
-        }]
+        ProductVariant: [{
+            name: 'priceDetails',
+            type: 'localeString',
+            label: [
+                {languageCode: LanguageCode.en, value: 'Price Details'},
+                {languageCode: LanguageCode.fr, value: 'Détails du prix'},
+            ],
+        }, {
+            name: 'packagingDetails',
+            type: 'localeString',
+            label: [
+                {languageCode: LanguageCode.en, value: 'Packaging Details'},
+                {languageCode: LanguageCode.fr, value: 'Détails du conditionnement'},
+            ],
+        }, {
+            name: 'origin',
+            type: 'localeString',
+            label: [
+                {languageCode: LanguageCode.en, value: 'Origin'},
+                {languageCode: LanguageCode.fr, value: 'Origine'},
+            ],
+        }, {
+            name: 'alternateName',
+            type: 'localeString',
+            label: [
+                {languageCode: LanguageCode.en, value: 'Alternate Name'},
+                {languageCode: LanguageCode.fr, value: 'Nom alternatif'},
+            ],
+        }],
     },
     plugins: [
         AssetServerPlugin.init({
