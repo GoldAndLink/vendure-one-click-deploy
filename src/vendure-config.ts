@@ -87,12 +87,29 @@ export const config: VendureConfig = {
                 {languageCode: LanguageCode.en, value: 'Origin'},
                 {languageCode: LanguageCode.fr, value: 'Origine'},
             ],
+            defaultValue: 'Martinique',
         }, {
             name: 'alternateName',
             type: 'localeString',
             label: [
                 {languageCode: LanguageCode.en, value: 'Alternate Name'},
                 {languageCode: LanguageCode.fr, value: 'Nom alternatif'},
+            ],
+        }, {
+            name: 'isSoldByWeight',
+            type: 'boolean',
+            label: [
+                {languageCode: LanguageCode.en, value: 'Is sold by weight'},
+                {languageCode: LanguageCode.fr, value: 'Est vendu au poids'},
+            ],
+            defaultValue: false,
+        }],
+        StockLevel: [{
+            name: 'weightOnHand',
+            type: 'float',
+            label: [
+                {languageCode: LanguageCode.en, value: 'Weight on hand'},
+                {languageCode: LanguageCode.fr, value: 'Poids en stock'},
             ],
         }],
     },
