@@ -70,8 +70,8 @@ export const config: VendureConfig = {
             name: 'priceDetails',
             type: 'localeString',
             label: [
-                {languageCode: LanguageCode.en, value: 'Price Details'},
-                {languageCode: LanguageCode.fr, value: 'Détails du prix'},
+                {languageCode: LanguageCode.en, value: 'Price per kilo'},
+                {languageCode: LanguageCode.fr, value: 'Prix au kilo'},
             ],
         }, {
             name: 'packagingDetails',
