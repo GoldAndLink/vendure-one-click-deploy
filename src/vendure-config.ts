@@ -4,6 +4,7 @@ import {
     DefaultSearchPlugin,
     VendureConfig,
     LanguageCode,
+    DefaultMoneyStrategy,
 } from '@vendure/core';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
 import { AssetServerPlugin, configureS3AssetStorage } from '@vendure/asset-server-plugin';
@@ -12,6 +13,10 @@ import 'dotenv/config';
 import path from 'path';
 
 const IS_DEV = process.env.APP_ENV === 'dev';
+
+export class FiveDecimalPlacesMoneyStrategy extends DefaultMoneyStrategy {
+    readonly precision = 5;
+}
 
 export const config: VendureConfig = {
     apiOptions: {
@@ -39,7 +44,7 @@ export const config: VendureConfig = {
             password: process.env.SUPERADMIN_PASSWORD,
         },
         cookieOptions: {
-          secret: process.env.COOKIE_SECRET,
+            secret: process.env.COOKIE_SECRET,
         },
     },
     dbConnectionOptions: {
@@ -70,37 +75,37 @@ export const config: VendureConfig = {
             name: 'priceDetails',
             type: 'localeString',
             label: [
-                {languageCode: LanguageCode.en, value: 'Price per kilo'},
-                {languageCode: LanguageCode.fr, value: 'Prix au kilo'},
+                { languageCode: LanguageCode.en, value: 'Price per kilo' },
+                { languageCode: LanguageCode.fr, value: 'Prix au kilo' },
             ],
         }, {
             name: 'packagingDetails',
             type: 'localeString',
             label: [
-                {languageCode: LanguageCode.en, value: 'Packaging Details'},
-                {languageCode: LanguageCode.fr, value: 'Détails du conditionnement'},
+                { languageCode: LanguageCode.en, value: 'Packaging Details' },
+                { languageCode: LanguageCode.fr, value: 'Détails du conditionnement' },
             ],
         }, {
             name: 'origin',
             type: 'localeString',
             label: [
-                {languageCode: LanguageCode.en, value: 'Origin'},
-                {languageCode: LanguageCode.fr, value: 'Origine'},
+                { languageCode: LanguageCode.en, value: 'Origin' },
+                { languageCode: LanguageCode.fr, value: 'Origine' },
             ],
             defaultValue: 'Martinique',
         }, {
             name: 'alternateName',
             type: 'localeString',
             label: [
-                {languageCode: LanguageCode.en, value: 'Alternate Name'},
-                {languageCode: LanguageCode.fr, value: 'Nom alternatif'},
+                { languageCode: LanguageCode.en, value: 'Alternate Name' },
+                { languageCode: LanguageCode.fr, value: 'Nom alternatif' },
             ],
         }, {
             name: 'isSoldByWeight',
             type: 'boolean',
             label: [
-                {languageCode: LanguageCode.en, value: 'Is sold by weight'},
-                {languageCode: LanguageCode.fr, value: 'Est vendu au poids'},
+                { languageCode: LanguageCode.en, value: 'Is sold by weight?' },
+                { languageCode: LanguageCode.fr, value: 'Vendu au poids?' },
             ],
             defaultValue: false,
         }],
@@ -108,8 +113,8 @@ export const config: VendureConfig = {
             name: 'weightOnHand',
             type: 'float',
             label: [
-                {languageCode: LanguageCode.en, value: 'Weight on hand'},
-                {languageCode: LanguageCode.fr, value: 'Poids en stock'},
+                { languageCode: LanguageCode.en, value: 'Weight on hand' },
+                { languageCode: LanguageCode.fr, value: 'Poids en stock' },
             ],
         }],
     },
@@ -120,7 +125,7 @@ export const config: VendureConfig = {
             // If the MINIO_ENDPOINT environment variable is set, we'll use
             // Minio as the asset storage provider. Otherwise, we'll use the
             // default local provider.
-            storageStrategyFactory: process.env.MINIO_ENDPOINT ?  configureS3AssetStorage({
+            storageStrategyFactory: process.env.MINIO_ENDPOINT ? configureS3AssetStorage({
                 bucket: 'vendure-assets',
                 credentials: {
                     accessKeyId: process.env.MINIO_ACCESS_KEY,
@@ -158,4 +163,7 @@ export const config: VendureConfig = {
             port: 3002,
         }),
     ],
+    entityOptions: {
+        moneyStrategy: new FiveDecimalPlacesMoneyStrategy(),
+    }
 };
