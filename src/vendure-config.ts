@@ -168,5 +168,6 @@ export const config: VendureConfig = {
     },
     orderOptions: {
         orderItemsLimit: 999999,
+        orderLineItemsLimit: 999999,
     },
 };
