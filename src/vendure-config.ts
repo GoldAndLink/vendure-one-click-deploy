@@ -165,5 +165,8 @@ export const config: VendureConfig = {
     ],
     entityOptions: {
         moneyStrategy: new FiveDecimalPlacesMoneyStrategy(),
-    }
+    },
+    orderOptions: {
+        orderItemsLimit: 999999,
+    },
 };
