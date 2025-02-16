@@ -13,6 +13,7 @@ import { OrderPDFsPlugin } from '@pinelab/vendure-plugin-order-pdfs';
 import { compileUiExtensions } from '@vendure/ui-devkit/compiler';
 import 'dotenv/config';
 import path from 'path';
+import { SubscriptionFeaturePlugin } from './plugins/subscription-feature/subscription-feature.plugin';
 
 const IS_DEV = process.env.APP_ENV === 'dev';
 
@@ -163,13 +164,15 @@ export const config: VendureConfig = {
         OrderPDFsPlugin.init({
             allowPublicDownload: true // This is optional
         }),
+        SubscriptionFeaturePlugin.init({}),
         AdminUiPlugin.init({
             route: 'admin',
             port: 3002,
             app: compileUiExtensions({
                 outputPath: path.join(__dirname, '__admin-ui'),
                 extensions: [
-                    OrderPDFsPlugin.ui
+                    OrderPDFsPlugin.ui,
+                    SubscriptionFeaturePlugin.ui,
                 ],
             }),
         }),
