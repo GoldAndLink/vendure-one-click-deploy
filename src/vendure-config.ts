@@ -9,6 +9,8 @@ import {
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
 import { AssetServerPlugin, configureS3AssetStorage } from '@vendure/asset-server-plugin';
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
+import { OrderPDFsPlugin } from '@pinelab/vendure-plugin-order-pdfs';
+import { compileUiExtensions } from '@vendure/ui-devkit/compiler';
 import 'dotenv/config';
 import path from 'path';
 
@@ -158,9 +160,18 @@ export const config: VendureConfig = {
                 changeEmailAddressUrl: 'http://localhost:8080/verify-email-address-change'
             },
         }),
+        OrderPDFsPlugin.init({
+            allowPublicDownload: true // This is optional
+        }),
         AdminUiPlugin.init({
             route: 'admin',
             port: 3002,
+            app: compileUiExtensions({
+                outputPath: path.join(__dirname, '__admin-ui'),
+                extensions: [
+                    OrderPDFsPlugin.ui
+                ],
+            }),
         }),
     ],
     entityOptions: {
