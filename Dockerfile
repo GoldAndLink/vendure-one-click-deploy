@@ -22,7 +22,7 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm run build --no-cache .
+RUN npm run build --no-cache
 
 
 # From Order PDF Plugin #######
