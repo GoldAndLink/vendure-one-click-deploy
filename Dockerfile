@@ -22,13 +22,17 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm run build
+RUN npm run build --no-cache .
 
 
 # From Order PDF Plugin #######
 
 ENV GENERATE_SOURCEMAP=false
 ENV NODE_OPTIONS=--max-old-space-size=16384
+
+RUN npm install esbuild
+RUN chmod +x /usr/src/app/node_modules/@esbuild/linux-x64/bin/esbuild
+RUN npm rebuild esbuild --build-from-source
 
 RUN npm -g install @angular/cli@17.3.12
 
