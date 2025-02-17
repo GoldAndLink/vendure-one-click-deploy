@@ -23,12 +23,18 @@ COPY package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
+
+
+# From Order PDF Plugin #######
+
+ENV GENERATE_SOURCEMAP=false
+ENV NODE_OPTIONS=--max-old-space-size=16384
+
 RUN npm -g install @angular/cli@17.3.12
 
 RUN npm install -g increase-memory-limit
 RUN npm run fix-memory-limit
 
-# From Order PDF Plugin #######
 # Run the web service on container startup.
 CMD [ "npm", "run", "start" ]
 ##############################
